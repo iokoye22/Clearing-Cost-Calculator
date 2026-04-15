@@ -11,6 +11,9 @@ import OverheadCosts from './components/sections/OverheadCosts';
 import RiskBuffer from './components/sections/RiskBuffer';
 import SellingPriceModule from './components/sections/SellingPriceModule';
 import SummaryPanel from './components/SummaryPanel';
+import LandingPage from './components/LandingPage';
+
+type CalculatorType = 'none' | 'cars' | 'consumer-goods';
 
 // Default initial state
 const initialState: CalculatorInputs = {
@@ -63,6 +66,7 @@ const initialState: CalculatorInputs = {
 };
 
 function App() {
+  const [calculatorType, setCalculatorType] = useState<CalculatorType>('none');
   const [inputs, setInputs] = useState<CalculatorInputs>(initialState);
 
   // Calculate results whenever inputs change
@@ -73,6 +77,41 @@ function App() {
     setInputs(initialState);
   };
 
+  // Go back to landing page
+  const handleBackToLanding = () => {
+    setCalculatorType('none');
+    setInputs(initialState);
+  };
+
+  // Get calculator title based on type
+  const getCalculatorTitle = () => {
+    switch (calculatorType) {
+      case 'cars':
+        return 'Cars Landed Cost Calculator';
+      case 'consumer-goods':
+        return 'Consumer Goods Landed Cost Calculator';
+      default:
+        return 'Landed Cost Calculator';
+    }
+  };
+
+  // Get calculator icon based on type
+  const getCalculatorIcon = () => {
+    switch (calculatorType) {
+      case 'cars':
+        return '🚗';
+      case 'consumer-goods':
+        return '📦';
+      default:
+        return '🧮';
+    }
+  };
+
+  // Show landing page if no calculator type selected
+  if (calculatorType === 'none') {
+    return <LandingPage onSelectCalculator={(type) => setCalculatorType(type)} />;
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Header */}
@@ -80,10 +119,20 @@ function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <span className="text-3xl">🧮</span>
+              {/* Back Button */}
+              <button
+                onClick={handleBackToLanding}
+                className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+                title="Back to calculator selection"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <span className="text-3xl">{getCalculatorIcon()}</span>
               <div>
                 <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
-                  Landed Cost Calculator
+                  {getCalculatorTitle()}
                 </h1>
                 <p className="text-sm text-gray-500 hidden sm:block">
                   Calculate your true import costs and profitable selling price
