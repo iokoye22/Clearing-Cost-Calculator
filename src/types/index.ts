@@ -3,7 +3,7 @@ export interface ProductProcurementInputs {
   quantity: number;
   supplierDiscount: number; // %
   packagingCost: number;
-  localTransportCost: number;
+  truckingToPortOfOrigin: number;
 }
 
 export interface ShippingLogisticsInputs {
@@ -21,6 +21,7 @@ export interface ImportClearingInputs {
   clearingAgentFee: number;
   demurrageFees: number;
   inspectionFees: number;
+  landingTransportCosts: number;
 }
 
 export interface CurrencyFXInputs {
@@ -41,6 +42,7 @@ export interface OverheadCostsInputs {
 export interface RiskBufferInputs {
   damageLossRate: number; // %
   unexpectedCostBuffer: number; // %
+  costOfRepairs: number;
 }
 
 export interface SellingPriceInputs {
@@ -77,4 +79,8 @@ export interface CalculationResults {
   profitPerUnit: number;
   totalProfit: number;
   actualMarginPercent: number;
+
+  // USD equivalents
+  profitPerUnitUSD: number;
+  totalProfitUSD: number;
 }

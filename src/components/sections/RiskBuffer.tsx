@@ -31,6 +31,13 @@ const RiskBuffer: React.FC<Props> = ({ data, onChange }) => {
         max={100}
         hint="Buffer for unforeseen costs"
       />
+      <InputField
+        label="Cost of repairs"
+        value={data.costOfRepairs}
+        onChange={(v) => update('costOfRepairs', v)}
+        prefix="₦"
+        hint="Estimated repair costs"
+      />
     </SectionCard>
   );
 };

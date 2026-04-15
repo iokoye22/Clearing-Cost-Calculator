@@ -19,7 +19,7 @@ const initialState: CalculatorInputs = {
     quantity: 1,
     supplierDiscount: 0,
     packagingCost: 0,
-    localTransportCost: 0,
+    truckingToPortOfOrigin: 0,
   },
   shipping: {
     shippingMode: 'Sea',
@@ -35,6 +35,7 @@ const initialState: CalculatorInputs = {
     clearingAgentFee: 0,
     demurrageFees: 0,
     inspectionFees: 0,
+    landingTransportCosts: 0,
   },
   currencyFX: {
     exchangeRate: 1500,
@@ -52,6 +53,7 @@ const initialState: CalculatorInputs = {
   riskBuffer: {
     damageLossRate: 0,
     unexpectedCostBuffer: 0,
+    costOfRepairs: 0,
   },
   sellingPrice: {
     mode: 'margin',

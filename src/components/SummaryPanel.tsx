@@ -40,7 +40,7 @@ const SummaryPanel: React.FC<Props> = ({ results, quantity }) => {
           <p className="text-2xl font-bold">{formatCurrency(results.suggestedSellingPrice)}</p>
         </div>
 
-        {/* Profit Section */}
+        {/* Profit Section (NGN) */}
         <div className={`rounded-xl p-4 backdrop-blur-sm ${isProfit ? 'bg-green-500/20' : 'bg-red-500/20'}`}>
           <div className="grid grid-cols-2 gap-4">
             <div>
@@ -68,6 +68,31 @@ const SummaryPanel: React.FC<Props> = ({ results, quantity }) => {
               <span className={`text-lg font-bold ${isProfit ? 'text-green-100' : 'text-red-100'}`}>
                 {results.actualMarginPercent.toFixed(1)}%
               </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Profit Section (USD) */}
+        <div className={`rounded-xl p-4 backdrop-blur-sm ${isProfit ? 'bg-blue-500/20' : 'bg-red-500/20'}`}>
+          <p className={`text-sm mb-2 font-medium ${isProfit ? 'text-blue-200' : 'text-red-200'}`}>
+            💵 Profit in USD
+          </p>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <p className={`text-sm mb-1 ${isProfit ? 'text-blue-200' : 'text-red-200'}`}>
+                Profit / Unit
+              </p>
+              <p className={`text-xl font-bold ${isProfit ? 'text-blue-100' : 'text-red-100'}`}>
+                {formatCurrency(results.profitPerUnitUSD, 'USD')}
+              </p>
+            </div>
+            <div>
+              <p className={`text-sm mb-1 ${isProfit ? 'text-blue-200' : 'text-red-200'}`}>
+                Total Profit
+              </p>
+              <p className={`text-xl font-bold ${isProfit ? 'text-blue-100' : 'text-red-100'}`}>
+                {formatCurrency(results.totalProfitUSD, 'USD')}
+              </p>
             </div>
           </div>
         </div>

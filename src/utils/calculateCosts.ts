@@ -36,10 +36,13 @@ export function calculateCosts(inputs: CalculatorInputs): CalculationResults {
   const clearingTotal =
     importClearing.clearingAgentFee +
     importClearing.demurrageFees +
-    importClearing.inspectionFees;
+    importClearing.inspectionFees +
+    importClearing.landingTransportCosts;
 
   // ─── 6. Packaging & Local Transport ─────────────────────────────────────────
-  const procurementExtras = product.packagingCost + product.localTransportCost;
+  // Trucking to port of origin is in USD, convert to NGN
+  const truckingToPortNGN = product.truckingToPortOfOrigin * currencyFX.exchangeRate * fxMultiplier;
+  const procurementExtras = product.packagingCost + truckingToPortNGN;
 
   // ─── 7. Overhead Costs ──────────────────────────────────────────────────────
   const fixedOverhead =
@@ -65,7 +68,7 @@ export function calculateCosts(inputs: CalculatorInputs): CalculationResults {
   // ─── 8. Risk & Buffer ───────────────────────────────────────────────────────
   const subtotalBeforeRisk = subtotalBeforeBuffers + miscBufferAmount;
   const riskRate = (riskBuffer.damageLossRate + riskBuffer.unexpectedCostBuffer) / 100;
-  const riskBufferAmount = subtotalBeforeRisk * riskRate;
+  const riskBufferAmount = (subtotalBeforeRisk * riskRate) + riskBuffer.costOfRepairs;
 
   // ─── 9. Total Landed Cost ───────────────────────────────────────────────────
   const totalLandedCost = subtotalBeforeRisk + riskBufferAmount;
@@ -87,6 +90,11 @@ export function calculateCosts(inputs: CalculatorInputs): CalculationResults {
   const actualMarginPercent =
     suggestedSellingPrice > 0 ? (profitPerUnit / suggestedSellingPrice) * 100 : 0;
 
+  // ─── 11. USD Equivalents ────────────────────────────────────────────────────
+  // Convert profit values to USD using the exchange rate
+  const profitPerUnitUSD = currencyFX.exchangeRate > 0 ? profitPerUnit / currencyFX.exchangeRate : 0;
+  const totalProfitUSD = currencyFX.exchangeRate > 0 ? totalProfit / currencyFX.exchangeRate : 0;
+
   return {
     netCOGS_USD,
     netCOGS_NGN,
@@ -102,6 +110,8 @@ export function calculateCosts(inputs: CalculatorInputs): CalculationResults {
     profitPerUnit,
     totalProfit,
     actualMarginPercent,
+    profitPerUnitUSD,
+    totalProfitUSD,
   };
 }
 

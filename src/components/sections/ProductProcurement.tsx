@@ -46,11 +46,11 @@ const ProductProcurement: React.FC<Props> = ({ data, onChange }) => {
         hint="Total packaging cost"
       />
       <InputField
-        label="Local transport cost (origin)"
-        value={data.localTransportCost}
-        onChange={(v) => update('localTransportCost', v)}
-        prefix="₦"
-        hint="Transport in origin country"
+        label="Trucking to port of origin"
+        value={data.truckingToPortOfOrigin}
+        onChange={(v) => update('truckingToPortOfOrigin', v)}
+        prefix="$"
+        hint="Cost to transport goods to the port of origin (USD)"
       />
     </SectionCard>
   );

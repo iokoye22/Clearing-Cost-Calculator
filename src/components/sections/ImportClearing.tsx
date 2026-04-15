@@ -51,6 +51,13 @@ const ImportClearing: React.FC<Props> = ({ data, onChange }) => {
         prefix="₦"
         hint="SON, NAFDAC, etc."
       />
+      <InputField
+        label="Landing Transport Costs"
+        value={data.landingTransportCosts}
+        onChange={(v) => update('landingTransportCosts', v)}
+        prefix="₦"
+        hint="Transport from port to destination"
+      />
     </SectionCard>
   );
 };
